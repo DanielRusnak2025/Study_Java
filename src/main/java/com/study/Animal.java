@@ -2,33 +2,19 @@ package com.study;
 
 import java.util.Scanner;
 
+
 public class Animal {
     private String name;
     private int age;
     private double weight;
     private String type;
 
-    Scanner scanner = new Scanner(System.in);
     Animal() {
-        System.out.println("Имя животного : ");
-        this.name = scanner.next();
-
-        System.out.println("Возраст животного : ");
-        this.age = scanner.nextInt();
-        while (this.age <= 0) {
-            System.out.println("Введите корректный Возраст животного (больше 0): ");
-            this.age = scanner.nextInt();
-        }
-
-        System.out.println("Вес животного : ");
-        this.weight = scanner.nextDouble();
-        while (this.weight <= 0) {
-            System.out.println("Введите корректный вес животного (больше 0): ");
-            this.weight = scanner.nextDouble();
-        }
-
-        System.out.println("Тип животного : ");
-        this.type = scanner.next();
+        Scanner scanner = new Scanner(System.in);
+        this.name = this.readName(scanner);
+        this.weight = this.readWeight(scanner);
+        this.type = this.readType(scanner);
+        this.age = this.readAge(scanner);
     }
 
     Animal(String name, int age, double weight, String type){
@@ -38,6 +24,35 @@ public class Animal {
         this.type = type;
     }
 
+    private String readName(Scanner scanner){
+        System.out.println("Имя животного : ");
+        return scanner.next();
+    }
+
+    private int readAge(Scanner scanner){
+        System.out.println("Возраст животного : ");
+        int age = scanner.nextInt();
+        while(age <= 0){
+            System.out.println("Введите корректный Возраст животного (больше 0): ");
+            age = scanner.nextInt();
+        }
+        return age;
+    }
+
+    private double readWeight(Scanner scanner){
+        System.out.println("Вес животного : ");
+        double weight = scanner.nextDouble();
+        while (weight <= 0) {
+            System.out.println("Введите корректный вес животного (больше 0): ");
+            weight = scanner.nextDouble();
+        }
+        return weight;
+    }
+
+    private String readType(Scanner scanner){
+        System.out.println("Тип животного : ");
+        return scanner.next();
+    }
 
     public String makeSound() {
         return switch (this.type) {
@@ -47,11 +62,17 @@ public class Animal {
         };
     }
 
-    public void animalCard() {
+    public void describe(boolean verbose) {
+        if(verbose){
         System.out.println(String.format("  ─── Карточка животного ───\n" +
                 "   Имя:     %s\n" +
                 "   Тип:     %s\n" +
                 "   Возраст: %d г.\n" +
-                "   Вес:     %.2f кг", this.name, this.type + " " + this.makeSound(), this.age, this.weight));
+                "   Вес:     %.2f кг", this.name, this.type + " " + this.makeSound(), this.age, this.weight));}
+        else{
+            System.out.println(String.format("  ─── Карточка животного ───\n" +
+                    "   Имя:     %s\n" +
+                    "   Тип:     %s\n", this.name, this.type + " " + this.makeSound()));
+        }
     }
 }
