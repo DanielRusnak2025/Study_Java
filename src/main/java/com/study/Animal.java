@@ -5,12 +5,14 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.UUID;
 
+import static com.study.HealthStatus.HEALTHY;
 
 public abstract class Animal {
     private String name;
     private final LocalDate birth;
     private double weight;
     private final UUID id;
+    private HealthStatus animalStatus;
 
     Animal(String name, LocalDate birth, double weight) {
         if (name == null) {
@@ -27,6 +29,7 @@ public abstract class Animal {
         this.weight = weight;
         this.birth = birth;
         this.id = UUID.randomUUID();
+        this.animalStatus = HEALTHY;
     }
 
     public int age() {
@@ -37,8 +40,9 @@ public abstract class Animal {
         if (verbose) {
             System.out.println(String.format("  ─── Карточка животного ───\n" +
                     "   Имя:     %s\n" +
-                    "   Возраст: %s г.\n" +
-                    "   Вес:     %.2f кг", this.name, this.birth, this.weight));
+                    "   Возраст: %s \n" +
+                    "   Состояние здоровья: %s г.\n" +
+                    "   Вес:     %.2f кг", this.name, this.birth,this.animalStatus.getDescription(), this.weight));
         } else {
             System.out.println(String.format("  ─── Карточка животного ───\n" +
                     "   Имя:     %s\n", this.name));
@@ -56,6 +60,10 @@ public abstract class Animal {
         this.weight = weight;
     }
 
+    public void setAnimalStatus(HealthStatus s){
+        this.animalStatus = s;
+    }
+
     public double getWeight() {
         return weight;
     }
@@ -66,6 +74,10 @@ public abstract class Animal {
 
     public LocalDate getBirth() {
         return this.birth;
+    }
+
+    public HealthStatus getAnimalStatus(){
+        return this.animalStatus;
     }
 
     public abstract String makeSound();
@@ -91,4 +103,10 @@ public abstract class Animal {
     public UUID getId(){
         return this.id;
     }
+
+    public AnimalCard toCard(){
+        return new AnimalCard(getId(),getName(),getAnimalStatus());
+    }
+
+
 }

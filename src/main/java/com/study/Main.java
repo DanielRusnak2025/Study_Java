@@ -1,7 +1,6 @@
 package com.study;
 
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +20,16 @@ public class Main {
         for(Animal animal : animals){
             System.out.println(animal.equals(animals.get(0)));
         }
+
+        System.out.println(animals.get(3).toCard());
+        animals.get(3).setAnimalStatus(HealthStatus.SICK);
+        animals.get(3).describe(true);
+        System.out.println(animals.get(3).getAnimalStatus().getDescription());
+
+
+
+
+
 
     }
 }
